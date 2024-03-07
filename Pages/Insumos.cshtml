@@ -1,0 +1,181 @@
+﻿@page
+@model InsumosModel
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gerenciamento de Estoque</title>
+    <link rel="stylesheet" href="C:\Users\Felip\source\repos\HipicaFacil\wwwroot\css\bootstrap.min.css">
+    <style>
+        #insumos {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            #insumos td, #insumos th {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+
+            #insumos tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            #insumos tr:hover {
+                background-color: #ddd;
+            }
+
+            #insumos th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: #888888;
+                color: white;
+            }
+
+        /* Estilo para ocultar o formulário de edição por padrão */
+        #formEditar {
+            display: none;
+        }
+
+        /* Ajuste de espaçamento dos botões na coluna de Ações */
+        .d-flex button {
+            margin-right: 5px;
+        }
+
+        /* Ajuste de espaçamento das caixas de texto na área de edição */
+        #formEditar .form-floating {
+            margin-bottom: 10px;
+        }
+
+        /* Definindo a largura da coluna ID */
+        #insumos th:first-child,
+        #insumos td:first-child {
+            width: 50px;
+        }
+
+        /* Estilo para mostrar o ID na área de edição */
+        #formEditar #idInsumoEditar {
+            background-color: #f2f2f2;
+        }
+
+        /* Adicionando borda na área de Insumos Registrados */
+        #insumos-container {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        /* Estilo para os títulos */
+        h1, h3, h2 {
+            font-family: "Arial Black", sans-serif;
+            font-size: 20px; /* Altere o tamanho da fonte conforme necessário */
+        }
+    </style>
+</head>
+<body>
+    <h1>Gerenciamento de Estoque</h1>
+    <br />
+    <form method="post">
+        <div class="row g-3">
+            <div class="col-md-5">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="nomeInsumo" name="nomeInsumo" placeholder=" " required>
+                    <label for="nomeInsumo">Nome do Insumo:</label>
+                </div>
+            </div>
+            <div class="row-1">
+                <button type="submit" class="btn btn-primary">Adicionar</button>
+            </div>
+        </div>
+        <br />
+    </form>
+    <!-- Adicionando borda na área de Insumos Registrados -->
+    <div id="insumos-container">
+        <h3>Estoque</h3>
+        @if (Model.Insumos.Count > 0)
+        {
+            <table id="insumos" class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Ações</th> <!-- Adicionando a coluna de Ações -->
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var insumo in Model.Insumos)
+                    {
+                        <tr>
+                            <td>@insumo.Id</td>
+                            <td>@insumo.Nome</td>
+                            <td class="d-flex">
+                                <form method="post">
+                                    <input type="hidden" name="idInsumo" value="@insumo.Id" />
+                                    <button type="submit" class="btn btn-danger">Apagar</button>
+                                </form>
+                                <!-- Adicionando um botão "Editar" -->
+                                <button type="button" class="btn btn-primary" onclick="mostrarFormEditar('@insumo.Nome', @insumo.Id)">Editar</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <br />
+
+            <!-- Formulário de edição (inicialmente oculto) -->
+            <div id="formEditar">
+                <h2>Editar produto</h2>
+                <form method="post">
+                    <div class="row g-3">
+                        <div class="col-md-5">
+                            <div class="form-floating">
+                                <!-- Mostrar o ID sem permitir edição -->
+                                <input type="number" class="form-control" id="idInsumoEditar" name="idInsumoEditar" placeholder=" " required readonly>
+                                <label for="idInsumoEditar">ID do Insumo:</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-5">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="novoNomeInsumo" name="novoNomeInsumo" placeholder=" " required>
+                                <label for="novoNomeInsumo">Novo nome do Insumo:</label>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row g-3">
+                        <div class="col-md-5">
+                            <!-- Botão "Cancelar" -->
+                            <button type="button" class="btn btn-secondary" onclick="ocultarFormEditar()">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Editar</button>
+                        </div>
+                    </div>
+                </form>
+                <br />
+            </div>
+        }
+        else
+        {
+            <p>Nenhum produto registrado.</p>
+        }
+    </div>
+
+    <!-- Script JavaScript para mostrar/ocultar o formulário de edição -->
+    <script>
+        function mostrarFormEditar(nomeInsumo, idInsumo) {
+            document.getElementById("novoNomeInsumo").value = nomeInsumo;
+            document.getElementById("idInsumoEditar").value = idInsumo;
+            document.getElementById("formEditar").style.display = "block";
+        }
+
+        function ocultarFormEditar() {
+            document.getElementById("formEditar").style.display = "none";
+        }
+    </script>
+</body>
+</html>

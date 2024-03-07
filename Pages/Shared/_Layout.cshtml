@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HipicaFacil</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/HipicaFacil.styles.css" asp-append-version="true" />
+    <style>
+ 
+        .navbar-custom {
+            position: fixed;
+            background-color: #f8f9fa; /* Cor de fundo */
+            border-bottom: 1px solid #dee2e6; /* Borda inferior */
+            position: relative; /* Posição relativa */
+            z-index: 1000; /* Garante que a topbar esteja acima da sidebar */
+            text-align: left; /* Alinha o conteúdo da topbar à esquerda */
+        }
+
+        /* Estilo personalizado para o footer */
+        .footer-custom {
+            background-color: #f8f9fa; /* Cor de fundo */
+            border-top: 1px solid #dee2e6; /* Borda superior */
+            position: relative; /* Posição relativa */
+            z-index: 1000; /* Z-index para sobrepor a sidebar */
+            text-align: left; /* Alinha o conteúdo do footer à esquerda */
+            margin-left: 0; /* Remove a margem */
+        }
+        /* Estilo personalizado para a barra lateral */
+        #sidebar {
+            position: fixed; /* Fixar a barra lateral */
+            width: 250px; /* Largura */
+            background-color: #fff; /* Cor de fundo */
+            border-right: 1px solid #dee2e6; /* Borda direita */
+            border-bottom: 1px solid #dee2e6; /* Borda inferior */
+            height: 100vh; /* Altura total da tela */
+            top: 0; /* Alinhar ao topo */
+            left: 0; /* Alinhar à esquerda */
+            overflow-y: auto; /* Adicionar rolagem vertical */
+            z-index: 900; /* Define um z-index menor que o da topbar */
+            padding-top: 60px; /* Ajusta o espaço superior para evitar sobreposição com a topbar */
+        }
+
+            #sidebar .sidebar-heading {
+                padding: 0.875rem 1.25rem; /* Espaçamento interno */
+                font-size: 1.2rem; /* Tamanho da fonte */
+                text-align: center; /* Alinhamento do texto */
+            }
+
+            #sidebar .nav-link {
+                padding: 0.5rem 1.25rem; /* Espaçamento interno */
+                color: #495057; /* Cor do texto */
+            }
+
+                #sidebar .nav-link:hover {
+                    background-color: #f8f9fa; /* Cor de fundo ao passar o mouse */
+                    color: #007bff; /* Cor do texto ao passar o mouse */
+                }
+
+            #sidebar .active {
+                background-color: #007bff; /* Cor de fundo do item ativo */
+                color: #fff; /* Cor do texto do item ativo */
+            }
+
+        /* Estilo personalizado para o conteúdo principal */
+        #main-content {
+            margin-left: 250px; /* Margem igual à largura da sidebar */
+            position: relative; /* Posição relativa */
+            z-index: 0; /* Z-index para sobrepor a sidebar */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BAR -->
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 navbar-custom">
+            <div class="container">
+                <a class="navbar-brand align-left mr-auto" asp-area="" asp-page="/Index">HipicaFacil</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- SIDE BAR -->
+    <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+        <div class="position-sticky">
+            <div class="sidebar-sticky"> 
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-page="/Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-page="/Insumos">Insumos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-page="/Privacy">Privacidade</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <main id="main-content" role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- RODA PE-->
+    <footer class="border-top footer text-muted footer-custom">
+        <div class="container">
+            &copy; 2024 - HipicaFacil - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

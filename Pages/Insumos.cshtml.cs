@@ -25,6 +25,7 @@ public class InsumosModel : PageModel
     public int IdInsumoEditar { get; set; }
 
     public List<Insumo>? Insumos { get; set; }
+    private string connectionString= "Server=127.0.0.1;port=3306;Database=bd_hipicafacil;Uid=root;Pwd=06042001";
 
     public void OnGet()
     {
@@ -54,8 +55,6 @@ public class InsumosModel : PageModel
 
     public void CarregarInsumos()
     {
-        // String de conexão com o banco de dados MySQL
-        string connectionString = "Server=127.0.0.1;Port=3307;Database=hipicafacil;Uid=root;Pwd=root;";
 
         Insumos = new List<Insumo>();
 
@@ -89,9 +88,6 @@ public class InsumosModel : PageModel
 
     private void AdicionarInsumo(string nomeInsumo)
     {
-        // String de conexão com o banco de dados MySQL
-        string connectionString = "Server=127.0.0.1;Port=3307;Database=hipicafacil;Uid=root;Pwd=root;";
-
         // Cria uma nova conexão com o banco de dados
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
@@ -124,9 +120,6 @@ public class InsumosModel : PageModel
 
     private void ApagarInsumo(int idInsumo)
     {
-        // String de conexão com o banco de dados MySQL
-        string connectionString = "Server=127.0.0.1;Port=3307;Database=hipicafacil;Uid=root;Pwd=root;";
-
         // Cria uma nova conexão com o banco de dados
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
@@ -159,9 +152,6 @@ public class InsumosModel : PageModel
 
     private void EditarInsumo(int idInsumo, string novoNome)
     {
-        // String de conexão com o banco de dados MySQL
-        string connectionString = "Server=127.0.0.1;Port=3307;Database=hipicafacil;Uid=root;Pwd=root;";
-
         // Cria uma nova conexão com o banco de dados
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {

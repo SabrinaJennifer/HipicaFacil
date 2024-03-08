@@ -6,99 +6,73 @@ using System.Collections.Generic;
 
 namespace HipicaFacil.Pages
 {
-    public class Cavalo()
+    public class Cavalo
     {
         public int Id { get; set; }
-        public string? Nome { get; set; }
-        public string? Raca { get; set; }
+        public string Nome { get; set; }
+        public string Raca { get; set; }
         public decimal Peso { get; set; }
         public int Idade { get; set; }
         public decimal Altura { get; set; }
-        // criar caixa de seleção com tipos de cavalos (salto, adestramento...)
-        // precisa criar classe para upload de documento?
+
     }
+
     public class CavalosModel : PageModel
     {
         [BindProperty]
-        public int IdCavalo { get; set; }
+        public Cavalo NovoCavalo { get; set; }
 
-        [BindProperty]
-        public string? NomeCavalo { get; set; }
+        public List<Cavalo> Cavalos { get; set; }
 
-        [BindProperty]
-        public string? NovoNomeCavalo { get; set; }
-
-        [BindProperty]
-        public int IdCavaloEditar { get; set; }
-
-        [BindProperty]
-        public string? RacaCavalo { get; set; }
-
-        [BindProperty]
-        public string? NovoRacaCavalo { get; set; }
-
-        [BindProperty]
-        public string? PesoCavalo { get; set; }
-
-        [BindProperty]
-        public string? NovoPesoCavalo { get; set; }
-        [BindProperty]
-        public string? IdadeCavalo { get; set; }
-
-        [BindProperty]
-        public string? NovoIdadeCavalo { get; set; }
-        [BindProperty]
-        public string? AlturaCavalo { get; set; }
-
-        [BindProperty]
-        public string? NovoAlturaCavalo { get; set; }
-
-        public List<Cavalo>? Cavalos { get; set; }
+        private string ConnectionString = "Server=127.0.0.1;port=3306;Database=bd_hipicafacil;Uid=root;Pwd=06042001";
 
         public void OnGet()
         {
             CarregarCavalos();
         }
-        public IActionResult OnPost()
+
+        public IActionResult OnPostAdicionar()
         {
-            // Se o ID do cavalo for fornecido, apaga o cavalo
-            if (IdCavalo != 0)
+            if (NovoCavalo != null)
             {
-                ApagarCavalo(IdCavalo);
-            }
-            if (!(IdCavaloEditar == 0 || string.IsNullOrEmpty(NovoNomeCavalo)))
-            {
-                EditarCavalo(IdCavaloEditar, NovoNomeCavalo);
+                AdicionarCavalo(NovoCavalo);
             }
             else
             {
-                AdicionarCavalo(NomeCavalo); // Adiciona um novo Cavalo
+                ModelState.AddModelError("", "Falha ao adicionar o cavalo. Por favor, verifique os dados fornecidos.");
             }
 
+            CarregarCavalos();
 
-            // Redireciona de volta para a página inicial após adicionar ou apagar o cavalo
-            return RedirectToPage("/Cavalos");
+            return Page();
         }
-        public void CarregarCavalos()
-        {
-            // String de conexão com o banco de dados MySQL
-            string connectionString = "Server=127.0.0.1;Port=3307;Database=hipicafacil;Uid=root;Pwd=root;";
 
+        public IActionResult OnPostApagar(int idCavalo)
+        {
+            ApagarCavalo(idCavalo);
+            CarregarCavalos();
+            return Page();
+        }
+
+        public IActionResult OnPostEditar(int idCavalo, string novoNome)
+        {
+            EditarCavalo(idCavalo, novoNome);
+            CarregarCavalos();
+            return Page();
+        }
+
+        private void CarregarCavalos()
+        {
             Cavalos = new List<Cavalo>();
 
-            // Cria uma nova conexão com o banco de dados
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
-                // Abre a conexão
                 connection.Open();
 
-                // Comando SQL para selecionar todos os cavalos
-                string sql = "SELECT id_cavalo, nome_cavalo, raca_cavalo, peso_cavalo, idade_cavalo  FROM tb_cavalos";
+                string sql = "SELECT id_cavalo, nome_cavalo, raca_cavalo,peso_cavalo, idade_cavalo FROM tb_cavalos";
 
-                // Cria um novo comando SQL
                 using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
-                    // Executa o comando SQL e lê os resultados
                     using (MySqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -108,121 +82,91 @@ namespace HipicaFacil.Pages
                                 Id = reader.GetInt32(0),
                                 Nome = reader.GetString(1),
                                 Raca = reader.GetString(2),
-                                Peso = reader.GetInt32(3),
+                                Peso = reader.GetDecimal(3),
                                 Idade = reader.GetInt32(4)
-
                             });
                         }
                     }
                 }
             }
-            private void AdicionarCavalo(string nomeCavalo)
+        }
+
+        private void AdicionarCavalo(Cavalo cavalo)
+        {
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
-                // String de conexão com o banco de dados MySQL
-                string connectionString = "Server=127.0.0.1;Port=3307;Database=hipicafacil;Uid=root;Pwd=root;";
-
-                // Cria uma nova conexão com o banco de dados
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                try
                 {
-                    try
+                    connection.Open();
+
+                    string sql = "INSERT INTO Tb_cavalos (nome_cavalo, raca_cavalo, peso_cavalo, idade_cavalo) VALUES (@nome, @raca, @peso, @idade)";
+
+                    using (MySqlCommand command = new MySqlCommand(sql, connection))
                     {
-                        // Abre a conexão
-                        connection.Open();
+                        command.Parameters.AddWithValue("@nome", cavalo.Nome);
+                        command.Parameters.AddWithValue("@raca", cavalo.Raca);
+                        command.Parameters.AddWithValue("@peso", cavalo.Peso);
+                        command.Parameters.AddWithValue("@idade", cavalo.Idade);
 
-                        // Comando SQL para inserir um novo cavalo na tabela Tb_cavalos
-                        string sql = "INSERT INTO Tb_cavalo (nome_cavalo) VALUES (@nome)";
-
-                        // Cria um novo comando SQL
-                        using (MySqlCommand command = new MySqlCommand(sql, connection))
-                        {
-                            // Define os parâmetros do comando SQL
-                            command.Parameters.AddWithValue("@nome", nomeCavalo);
-
-                            // Executa o comando SQL
-                            command.ExecuteNonQuery();
-
-                            Console.WriteLine("Cavalo adicionado com sucesso!");
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Erro ao adicionar Cavalo: " + ex.Message);
+                        command.ExecuteNonQuery();
                     }
                 }
-            }
-
-            private void ApagarCavalo(int idCavalo)
-            {
-                // String de conexão com o banco de dados MySQL
-                string connectionString = "Server=127.0.0.1;Port=3307;Database=hipicafacil;Uid=root;Pwd=root;";
-
-                // Cria uma nova conexão com o banco de dados
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                catch (Exception ex)
                 {
-                    try
-                    {
-                        // Abre a conexão
-                        connection.Open();
-
-                        // Comando SQL para apagar o cavalo da tabela Tb_cavalos
-                        string sql = "DELETE FROM Tb_cavalos WHERE id_ = @id";
-
-                        // Cria um novo comando SQL
-                        using (MySqlCommand command = new MySqlCommand(sql, connection))
-                        {
-                            // Define os parâmetros do comando SQL
-                            command.Parameters.AddWithValue("@id", idCavalo);
-
-                            // Executa o comando SQL
-                            command.ExecuteNonQuery();
-
-                            Console.WriteLine("Cavalo removido com sucesso!");
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Erro ao remover Cavalo: " + ex.Message);
-                    }
+                    Console.WriteLine("Erro ao adicionar Cavalo: " + ex.Message);
                 }
             }
+        }
 
-            private void EditarCavalo(int idCavalo, string novoNome)
+        private void ApagarCavalo(int idCavalo)
+        {
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
-                // String de conexão com o banco de dados MySQL
-                string connectionString = "Server=127.0.0.1;Port=3307;Database=hipicafacil;Uid=root;Pwd=root;";
-
-                // Cria uma nova conexão com o banco de dados
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                try
                 {
-                    try
+                    connection.Open();
+
+                    string sql = "DELETE FROM Tb_cavalos WHERE id_cavalo = @id";
+
+                    using (MySqlCommand command = new MySqlCommand(sql, connection))
                     {
-                        // Abre a conexão
-                        connection.Open();
+                        command.Parameters.AddWithValue("@id", idCavalo);
 
-                        // Comando SQL para atualizar o nome do cavalo na tabela Tb_cavalos
-                        string sql = "UPDATE Tb_cavalos SET nome_cavalo = @novoNome WHERE id_cavalo = @id";
-
-                        // Cria um novo comando SQL
-                        using (MySqlCommand command = new MySqlCommand(sql, connection))
-                        {
-                            // Define os parâmetros do comando SQL
-                            command.Parameters.AddWithValue("@id", idCavalo);
-                            command.Parameters.AddWithValue("@novoNome", novoNome);
-
-                            // Executa o comando SQL
-                            command.ExecuteNonQuery();
-
-                            Console.WriteLine("Cavalo editado com sucesso!");
-                        }
+                        command.ExecuteNonQuery();
                     }
-                    catch (Exception ex)
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Erro ao apagar Cavalo: " + ex.Message);
+                }
+            }
+        }
+
+        private void EditarCavalo(int idCavalo, string novoNome)
+        {
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string sql = "UPDATE Tb_cavalos SET nome_cavalo = @novoNome WHERE id_cavalo = @id";
+
+                    using (MySqlCommand command = new MySqlCommand(sql, connection))
                     {
-                        Console.WriteLine("Erro ao editar Cavalo: " + ex.Message);
+                        command.Parameters.AddWithValue("@id", idCavalo);
+                        command.Parameters.AddWithValue("@novoNome", novoNome);
+
+                        command.ExecuteNonQuery();
                     }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Erro ao editar Cavalo: " + ex.Message);
                 }
             }
         }
     }
-  
 }
+
 

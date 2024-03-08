@@ -1,4 +1,17 @@
 ﻿@page
 @model HipicaFacil.Pages.CavalosModel
-@{
-}
+
+<<div>
+    <h1>CHEGOU AQUI SAPORRA</h1>
+</div>
+
+<div>
+    @foreach(var Cavalo in Model.Cavalos)
+    {
+        <h1>@Cavalo.Nome</h1>
+        <h1>@Cavalo.Raca</h1>
+        <h1>@Cavalo.Peso</h1>
+        <h1>@Cavalo.Altura</h1>
+        <h1>@Cavalo.Idade</h1>
+    }
+</div>

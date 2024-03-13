@@ -8,71 +8,44 @@
     <title>Gerenciamento de Estoque</title>
     <link rel="stylesheet" href="~/css/bootstrap-grid.min.css">
     <style>
-        #insumos {
-            font-family: Arial, Helvetica, sans-serif;
+        /* Estilo para a tabela de cavalos */
+        table {
+            font-family: Arial, sans-serif;
             border-collapse: collapse;
             width: 100%;
         }
 
-            #insumos td, #insumos th {
-                border: 1px solid #ddd;
-                padding: 8px;
-            }
-
-            #insumos tr:nth-child(even) {
-                background-color: #f2f2f2;
-            }
-
-            #insumos tr:hover {
-                background-color: #ddd;
-            }
-
-            #insumos th {
-                padding-top: 12px;
-                padding-bottom: 12px;
-                text-align: left;
-                background-color: #888888;
-                color: white;
-            }
-
-        /* Estilo para ocultar o formulário de edição por padrão */
-        #formEditar {
-            display: none;
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
         }
 
-        /* Ajuste de espaçamento dos botões na coluna de Ações */
-        .d-flex button {
-            margin-right: 5px;
-        }
-
-        /* Ajuste de espaçamento das caixas de texto na área de edição */
-        #formEditar .form-floating {
-            margin-bottom: 10px;
-        }
-
-        /* Definindo a largura da coluna ID */
-        #insumos th:first-child,
-        #insumos td:first-child {
-            width: 50px;
-        }
-
-        /* Estilo para mostrar o ID na área de edição */
-        #formEditar #idInsumoEditar {
+        th {
             background-color: #f2f2f2;
         }
 
-        /* Adicionando borda na área de Insumos Registrados */
-        #insumos-container {
-            border: 1px solid #ddd;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 20px;
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
         }
 
-        /* Estilo para os títulos */
-        h1, h3, h2 {
-            font-family: "Arial Black", sans-serif;
-            font-size: 20px; /* Altere o tamanho da fonte conforme necessário */
+        /* Estilo para os botões de ação */
+        .acao-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 2px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .acao-btn-danger {
+            background-color: #dc3545;
         }
     </style>
 </head>

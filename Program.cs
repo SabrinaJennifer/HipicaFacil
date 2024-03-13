@@ -7,12 +7,10 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Adiciona serviços ao contêiner
         builder.Services.AddRazorPages();
 
         var app = builder.Build();
 
-        // Configura o pipeline de solicitação HTTP
         if (!app.Environment.IsDevelopment())
         {
             app.UseExceptionHandler("/Error");

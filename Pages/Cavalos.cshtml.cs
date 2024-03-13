@@ -1,172 +1,111 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 
-namespace HipicaFacil.Pages
+public class CavalosModel : PageModel
 {
-    public class Cavalo
-    {
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public string Raca { get; set; }
-        public decimal Peso { get; set; }
-        public int Idade { get; set; }
-        public decimal Altura { get; set; }
+    [BindProperty]
+    public Cavalo Cavalo { get; set; } = new Cavalo();
 
+    [BindProperty(SupportsGet = true)]
+    public int IdCavalo { get; set; }
+
+    public List<Cavalo> Cavalos { get; set; } = new List<Cavalo>();
+
+    private string connectionString = "Server=127.0.0.1;Port=3306;Database=bd_hipicafacil;Uid=root;Pwd=felipe;";
+
+    public void OnGet()
+    {
+        CarregarCavalos();
     }
 
-    public class CavalosModel : PageModel
+    public IActionResult OnPost()
     {
-        [BindProperty]
-        public Cavalo NovoCavalo { get; set; }
-
-        public List<Cavalo> Cavalos { get; set; }
-
-        private string ConnectionString = "Server=127.0.0.1;port=3306;Database=bd_hipicafacil;Uid=root;Pwd=06042001";
-
-        public void OnGet()
+        if (!string.IsNullOrEmpty(Cavalo.Nome))
         {
+            AdicionarCavalo(Cavalo);
+            CarregarCavalos();
+            Cavalo = new Cavalo(); // Limpa os campos para permitir adicionar mais cavalos
+        }
+        else if (IdCavalo != 0)
+        {
+            RemoverCavalo(IdCavalo);
             CarregarCavalos();
         }
 
-        public IActionResult OnPostAdicionar()
+        return RedirectToPage("/Cavalos");
+    }
+
+    private void CarregarCavalos()
+    {
+        Cavalos.Clear();
+
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            if (NovoCavalo != null)
+            connection.Open();
+            string sql = "SELECT id_cavalo, nome_cavalo, raca_cavalo, idade_cavalo, peso_cavalo FROM Tb_cavalos";
+
+            using (MySqlCommand command = new MySqlCommand(sql, connection))
             {
-                AdicionarCavalo(NovoCavalo);
-            }
-            else
-            {
-                ModelState.AddModelError("", "Falha ao adicionar o cavalo. Por favor, verifique os dados fornecidos.");
-            }
-
-            CarregarCavalos();
-
-            return Page();
-        }
-
-        public IActionResult OnPostApagar(int idCavalo)
-        {
-            ApagarCavalo(idCavalo);
-            CarregarCavalos();
-            return Page();
-        }
-
-        public IActionResult OnPostEditar(int idCavalo, string novoNome)
-        {
-            EditarCavalo(idCavalo, novoNome);
-            CarregarCavalos();
-            return Page();
-        }
-
-        private void CarregarCavalos()
-        {
-            Cavalos = new List<Cavalo>();
-
-            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
-            {
-                connection.Open();
-
-                string sql = "SELECT id_cavalo, nome_cavalo, raca_cavalo,peso_cavalo, idade_cavalo FROM tb_cavalos";
-
-                using (MySqlCommand command = new MySqlCommand(sql, connection))
+                using (MySqlDataReader reader = command.ExecuteReader())
                 {
-                    using (MySqlDataReader reader = command.ExecuteReader())
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        Cavalos.Add(new Cavalo
                         {
-                            Cavalos.Add(new Cavalo
-                            {
-                                Id = reader.GetInt32(0),
-                                Nome = reader.GetString(1),
-                                Raca = reader.GetString(2),
-                                Peso = reader.GetDecimal(3),
-                                Idade = reader.GetInt32(4)
-                            });
-                        }
+                            Id = reader.GetInt32(0),
+                            Nome = reader.GetString(1),
+                            Raca = reader.GetString(2),
+                            Idade = reader.GetInt32(3),
+                            Peso = reader.GetInt32(4)
+                        });
                     }
                 }
             }
         }
+    }
 
-        private void AdicionarCavalo(Cavalo cavalo)
+    private void AdicionarCavalo(Cavalo cavalo)
+    {
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
+            connection.Open();
+            string sql = "INSERT INTO Tb_cavalos (nome_cavalo, raca_cavalo, idade_cavalo, peso_cavalo) VALUES (@nome, @raca, @idade, @peso)";
+
+            using (MySqlCommand command = new MySqlCommand(sql, connection))
             {
-                try
-                {
-                    connection.Open();
-
-                    string sql = "INSERT INTO Tb_cavalos (nome_cavalo, raca_cavalo, peso_cavalo, idade_cavalo) VALUES (@nome, @raca, @peso, @idade)";
-
-                    using (MySqlCommand command = new MySqlCommand(sql, connection))
-                    {
-                        command.Parameters.AddWithValue("@nome", cavalo.Nome);
-                        command.Parameters.AddWithValue("@raca", cavalo.Raca);
-                        command.Parameters.AddWithValue("@peso", cavalo.Peso);
-                        command.Parameters.AddWithValue("@idade", cavalo.Idade);
-
-                        command.ExecuteNonQuery();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Erro ao adicionar Cavalo: " + ex.Message);
-                }
+                command.Parameters.AddWithValue("@nome", cavalo.Nome);
+                command.Parameters.AddWithValue("@raca", cavalo.Raca);
+                command.Parameters.AddWithValue("@idade", cavalo.Idade);
+                command.Parameters.AddWithValue("@peso", cavalo.Peso);
+                command.ExecuteNonQuery();
             }
         }
+    }
 
-        private void ApagarCavalo(int idCavalo)
+    private void RemoverCavalo(int idCavalo)
+    {
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
+            connection.Open();
+            string sql = "DELETE FROM Tb_cavalos WHERE id_cavalo = @id";
+
+            using (MySqlCommand command = new MySqlCommand(sql, connection))
             {
-                try
-                {
-                    connection.Open();
-
-                    string sql = "DELETE FROM Tb_cavalos WHERE id_cavalo = @id";
-
-                    using (MySqlCommand command = new MySqlCommand(sql, connection))
-                    {
-                        command.Parameters.AddWithValue("@id", idCavalo);
-
-                        command.ExecuteNonQuery();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Erro ao apagar Cavalo: " + ex.Message);
-                }
-            }
-        }
-
-        private void EditarCavalo(int idCavalo, string novoNome)
-        {
-            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
-            {
-                try
-                {
-                    connection.Open();
-
-                    string sql = "UPDATE Tb_cavalos SET nome_cavalo = @novoNome WHERE id_cavalo = @id";
-
-                    using (MySqlCommand command = new MySqlCommand(sql, connection))
-                    {
-                        command.Parameters.AddWithValue("@id", idCavalo);
-                        command.Parameters.AddWithValue("@novoNome", novoNome);
-
-                        command.ExecuteNonQuery();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Erro ao editar Cavalo: " + ex.Message);
-                }
+                command.Parameters.AddWithValue("@id", idCavalo);
+                command.ExecuteNonQuery();
             }
         }
     }
 }
 
-
+public class Cavalo
+{
+    public int Id { get; set; }
+    public string Nome { get; set; }
+    public string Raca { get; set; }
+    public int Idade { get; set; }
+    public int Peso { get; set; }
+}

@@ -8,117 +8,80 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/HipicaFacil.styles.css" asp-append-version="true" />
     <style>
- 
-        .navbar-custom {
-            position: fixed;
-            background-color: #f8f9fa; /* Cor de fundo */
-            border-bottom: 1px solid #dee2e6; /* Borda inferior */
-            position: relative; /* Posição relativa */
-            z-index: 1000; /* Garante que a topbar esteja acima da sidebar */
-            text-align: left; /* Alinha o conteúdo da topbar à esquerda */
-        }
-
-        /* Estilo personalizado para o footer */
-        .footer-custom {
-            background-color: #f8f9fa; /* Cor de fundo */
-            border-top: 1px solid #dee2e6; /* Borda superior */
-            position: relative; /* Posição relativa */
-            z-index: 1000; /* Z-index para sobrepor a sidebar */
-            text-align: left; /* Alinha o conteúdo do footer à esquerda */
-            margin-left: 0; /* Remove a margem */
-        }
-        /* Estilo personalizado para a barra lateral */
+        /* Estilo para a barra lateral (sidebar) */
         #sidebar {
-            position: fixed; /* Fixar a barra lateral */
+            background-color: #34495e; /* Cor de fundo */
+            color: #fff; /* Cor do texto */
             width: 250px; /* Largura */
-            background-color: #fff; /* Cor de fundo */
-            border-right: 1px solid #dee2e6; /* Borda direita */
-            border-bottom: 1px solid #dee2e6; /* Borda inferior */
-            height: 100vh; /* Altura total da tela */
-            top: 0; /* Alinhar ao topo */
-            left: 0; /* Alinhar à esquerda */
-            overflow-y: auto; /* Adicionar rolagem vertical */
-            z-index: 900; /* Define um z-index menor que o da topbar */
-            padding-top: 60px; /* Ajusta o espaço superior para evitar sobreposição com a topbar */
+            position: fixed; /* Posição fixa */
+            top: 0px; /* Alinhamento ao topo */
+            left: 0; /* Alinhamento à esquerda */
+            height: 100%; /* Altura total */
+            overflow-y: auto; /* Rolagem vertical */
+            padding-top: 20px; /* Preenchimento superior */
+            z-index: 1000; /* Z-index */
         }
 
             #sidebar .sidebar-heading {
-                padding: 0.875rem 1.25rem; /* Espaçamento interno */
-                font-size: 1.2rem; /* Tamanho da fonte */
+                padding: 20px; /* Preenchimento */
                 text-align: center; /* Alinhamento do texto */
+                font-size: 24px; /* Tamanho da fonte */
+                color: #fff; /* Cor do texto */
             }
 
             #sidebar .nav-link {
-                padding: 0.5rem 1.25rem; /* Espaçamento interno */
-                color: #495057; /* Cor do texto */
+                padding: 10px 20px; /* Preenchimento */
+                text-align: left; /* Alinhamento do texto */
+                color: #fff; /* Cor do texto */
             }
 
                 #sidebar .nav-link:hover {
-                    background-color: #f8f9fa; /* Cor de fundo ao passar o mouse */
-                    color: #007bff; /* Cor do texto ao passar o mouse */
+                    background-color: #2c3e50; /* Cor de fundo ao passar o mouse */
                 }
 
             #sidebar .active {
-                background-color: #007bff; /* Cor de fundo do item ativo */
-                color: #fff; /* Cor do texto do item ativo */
+                background-color: #2c3e50; /* Cor de fundo do item ativo */
             }
 
-        /* Estilo personalizado para o conteúdo principal */
+        /* Estilo para o conteúdo principal */
         #main-content {
-            margin-left: 250px; /* Margem igual à largura da sidebar */
+            margin-left: 250px; /* Margem esquerda */
+            padding: 20px; /* Preenchimento */
+            margin-top: 0px; /* Margem superior */
+            margin-bottom: 0px
+            background-color: #ecf0f1; /* Cor de fundo */
+            z-index: 0; /* Z-index */
             position: relative; /* Posição relativa */
-            z-index: 0; /* Z-index para sobrepor a sidebar */
         }
     </style>
 </head>
 <body>
 
-    <!-- TOP BAR -->
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 navbar-custom">
-            <div class="container">
-                <a class="navbar-brand align-left mr-auto" asp-area="" asp-page="/Index">HipicaFacil</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
-        </nav>
-    </header>
-
-    <!-- SIDE BAR -->
-    <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-        <div class="position-sticky">
-            <div class="sidebar-sticky"> 
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-page="/Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-page="/Cavalos">Cavalos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-page="/Insumos">Insumos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-page="/Privacy">Privacidade</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+    <!-- Barra lateral (sidebar) -->
+    <nav id="sidebar">
+        <div class="sidebar-heading">HipicaFacil</div>
+        <ul class="list-unstyled components">
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-page="/Index">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-page="/Cavalos">Cavalos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-page="/Insumos">Insumos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-page="/Privacy">Privacidade</a>
+            </li>
+        </ul>
     </nav>
-    <div class="container">
-        <main id="main-content" role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <!-- RODA PE-->
-    <footer class="border-top footer text-muted footer-custom">
+    <!-- Conteúdo principal -->
+    <div id="main-content">
         <div class="container">
-            &copy; 2024 - HipicaFacil - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            @RenderBody()
         </div>
-    </footer>
+    </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

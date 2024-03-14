@@ -25,7 +25,7 @@ public class InsumosModel : PageModel
     public int IdInsumoEditar { get; set; }
 
     public List<Insumo>? Insumos { get; set; }
-    private string connectionString= "Server=127.0.0.1;Port=3306;Database=bd_hipicafacil;Uid=root;Pwd=felipe;";
+    private string connectionString = "Server=127.0.0.1;Port=3306;Database=bd_hipicafacil;Uid=root;Pwd=06042001";
 
     public void OnGet()
     {

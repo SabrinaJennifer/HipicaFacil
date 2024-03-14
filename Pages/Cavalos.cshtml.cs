@@ -14,7 +14,7 @@ public class CavalosModel : PageModel
 
     public List<Cavalo> Cavalos { get; set; } = new List<Cavalo>();
 
-    private string connectionString = "Server=127.0.0.1;Port=3306;Database=bd_hipicafacil;Uid=root;Pwd=felipe;";
+    private string connectionString = "Server=127.0.0.1;Port=3306;Database=bd_hipicafacil;Uid=root;Pwd=06042001";
 
     public void OnGet()
     {

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MySql.Data.MySqlClient;
-using Microsoft.Extensions.Configuration;
 
 public class CavalosModel : PageModel
 {
@@ -12,9 +11,13 @@ public class CavalosModel : PageModel
     [BindProperty(SupportsGet = true)]
     public int IdCavalo { get; set; }
 
-    public List<Cavalo> Cavalos { get; set; } = new List<Cavalo>();
+    // Propriedades para o formulário de edição
+    [BindProperty]
+    public Cavalo CavaloEdit { get; set; } = new Cavalo();
 
-    private string connectionString = "Server=127.0.0.1;Port=3306;Database=bd_hipicafacil;Uid=root;Pwd=06042001";
+    private string connectionString = "Server=127.0.0.1;Port=3306;Database=bd_hipicafacil;Uid=root;Pwd=felipe";
+
+    public List<Cavalo> Cavalos { get; set; } = new List<Cavalo>();
 
     public void OnGet()
     {
@@ -35,6 +38,19 @@ public class CavalosModel : PageModel
             CarregarCavalos();
         }
 
+        return RedirectToPage("/Cavalos");
+    }
+
+    // Método para processar o formulário de edição
+    public IActionResult OnPostEditar()
+    {
+        if (CavaloEdit != null && CavaloEdit.Id != 0)
+        {
+            AtualizarCavalo(CavaloEdit);
+            CarregarCavalos(); // Recarrega a lista de cavalos após a edição
+        }
+
+        // Redireciona de volta para a página de cavalos
         return RedirectToPage("/Cavalos");
     }
 
@@ -95,6 +111,25 @@ public class CavalosModel : PageModel
             using (MySqlCommand command = new MySqlCommand(sql, connection))
             {
                 command.Parameters.AddWithValue("@id", idCavalo);
+                command.ExecuteNonQuery();
+            }
+        }
+    }
+
+    private void AtualizarCavalo(Cavalo cavalo)
+    {
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
+        {
+            connection.Open();
+            string sql = "UPDATE Tb_cavalos SET nome_cavalo = @nome, raca_cavalo = @raca, idade_cavalo = @idade, peso_cavalo = @peso WHERE id_cavalo = @id";
+
+            using (MySqlCommand command = new MySqlCommand(sql, connection))
+            {
+                command.Parameters.AddWithValue("@nome", cavalo.Nome);
+                command.Parameters.AddWithValue("@raca", cavalo.Raca);
+                command.Parameters.AddWithValue("@idade", cavalo.Idade);
+                command.Parameters.AddWithValue("@peso", cavalo.Peso);
+                command.Parameters.AddWithValue("@id", cavalo.Id);
                 command.ExecuteNonQuery();
             }
         }

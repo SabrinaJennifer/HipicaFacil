@@ -25,4 +25,8 @@
     <Folder Include="Pages\Telas\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\img\cavalinhos.png" />
+  </ItemGroup>
+
 </Project>

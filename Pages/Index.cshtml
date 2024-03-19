@@ -21,44 +21,44 @@
         header{
             text-align: center; /* Centraliza o conteúdo do cabeçalho */
         }
-        header h1 {
-            font-size: 36px; /* Ajusta o tamanho do título principal */
-            margin-bottom: 50px; /* Adiciona um espaçamento inferior ao título principal */
+        /* header h1 {
+            font-size: 36px; Ajusta o tamanho do título principal 
+            margin-bottom: 50px;  Adiciona um espaçamento inferior ao título principal 
         }
-        header h2 {
-            font-size: 24px; /* Ajusta o tamanho do subtítulo */
-            font-weight: normal; /* Remove o negrito do subtítulo */
-            margin-bottom: 30px; /* Adiciona um espaçamento inferior ao subtítulo */
-            }
+        header h2 
+            font-size: 24px;  Ajusta o tamanho do subtítulo 
+            font-weight: normal; Remove o negrito do subtítulo 
+            margin-bottom: 30px; Adiciona um espaçamento inferior ao subtítulo 
+            } */
             ul{
              text-align:left; 
              margin-top: 20px;
              margin-bottom: 20px;
              padding-left: 0;
             }
-            ul li {
-                margin-bottom: 20px; /* Adiciona uma margem inferior entre os itens da lista */
-            }
+            /* ul li {
+                margin-bottom: 20px;
+            } */
     </style>
 </head>
 
 <body>
     <header>
         <div class="center">
-@*        colocar uma imagem *@
+            <img src="./img/cavalinhos.png" class="img-fluid" alt="Responsive image">
         </div>
+        <h1 class="text-left">Seja Bem Vindo ao nosso sistema de gerenciamento de Hípicas</h1>
 
-        <h1>Seja Bem Vindo ao nosso sistema de gerenciamento de Hípicas</h1>
         <h2>Aqui você terá a oportunidade de manter sua Hípica organizada</h2>
-        <ul>
-            <li>Cadastro de Clientes</li>
-            <li>Cadastro de Cavalos</li>
-            <li>Controle de Estoque</li>
-            <li>Cadastro de Receita</li>
-            <li>Agendamento de aulas</li>
-            <li>Visualização Dashboard</li>
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item list-group-item-dark ">Cadastro de Clientes</li>
+            <li class="list-group-item">Cadastro de Cavalos</li>
+            <li class="list-group-item">Controle de Estoque</li>
+            <li class="list-group-item">Cadastro de Receita</li>
+            <li class="list-group-item">Agendamento de aulas</li>
+            <li class="list-group-item">Visualização Dashboard</li>
         </ul>
     </header>
-
 </body>
 </html>

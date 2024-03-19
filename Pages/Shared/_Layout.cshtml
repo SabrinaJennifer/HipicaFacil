@@ -8,7 +8,13 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/HipicaFacil.styles.css" asp-append-version="true" />
     <style>
-
+        .nav-link-side {
+            padding: 30px 30px; /* Preenchimento */
+            text-align: center; /* Alinhamento do texto */
+            color: #9f793c; /* Cor do texto */
+            font-size: 10px;
+            text-decoration:none    
+        }
         .navbar-custom {
             position: fixed;
             background-color: #f8f9fa; /* Cor de fundo */
@@ -46,17 +52,12 @@
             #sidebar .sidebar-heading {
                 padding: 20px; /* Preenchimento */
                 text-align: center; /* Alinhamento do texto */
-                font-size: 24px; /* Tamanho da fonte */
+                font-size: 24x; /* Tamanho da fonte */
                 color: #fff; /* Cor do texto */
 
             }
 
-            #sidebar .nav-link {
-                padding: 30px 30px; /* Preenchimento */
-                text-align: center; /* Alinhamento do texto */
-                color: #9f793c; /* Cor do texto */
-                font-size: 20px;
-            }
+
 
                 #sidebar .nav-link:hover {
                     /* background-color: dimgrey; /* Cor de fundo ao passar o mouse */ */
@@ -84,8 +85,7 @@
     <!-- TOP BAR -->
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 navbar-custom">
-            <div class="container">
-                        <img src=<img src="c:\users\sabri\source\repos\hipicafacil\images\logo-hipica.png"/img>
+            <div class="container-fluid">
                 <a class="navbar-brand align-left mr-auto" asp-area="" asp-page="/Index">HipicaFacil</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -97,18 +97,18 @@
 
     <!-- Barra lateral (sidebar) -->
     <nav id="sidebar">
-        <ul class="list-unstyled components">
+        <ul class="list-unstyled components d-flex flex-column align-items-center gap-4">
             <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-page="/Index">Home</a>
+                <a class="nav-link-side fs-3 text" asp-area="" asp-page="/Index">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-page="/Cavalos">Cavalos</a>
+                <a class="nav-link-side fs-3 text" asp-area="" asp-page="/Cavalos">Cavalos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-page="/Estoque">Estoque</a>
+                <a class="nav-link-side fs-3 text" asp-area="" asp-page="/Estoque">Estoque</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-page="/Privacy">Privacidade</a>
+                <a class="nav-link-side fs-3 text" asp-area="" asp-page="/Privacy">Privacidade</a>
             </li>
         </ul>
     </nav>
@@ -121,7 +121,7 @@
     </div>
 
     <footer class="border-top footer text-muted footer-custom">
-        <div class="container">
+        <div class="container-fluid">
             &copy; 2024 - HipicaFacil - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>

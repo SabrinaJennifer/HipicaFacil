@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿@* <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -105,24 +105,24 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link-side fs-3 text" asp-area="" asp-page="/Estoque">Estoque</a>
-            </li>
+            </li> *@
             @* <li class="nav-item">
                 <a class="nav-link-side fs-3 text" asp-area="" asp-page="/Index">Receitas</a>
             </li> *@
             @* <li class="nav-item">
                 <a class="nav-link-side fs-3 text" asp-area="" asp-page="/Index">Agenda</a>
             </li> *@
-           @*  <li class="nav-item">
+@*             <li class="nav-item">
                 <a class="nav-link-side fs-3 text" asp-area="" asp-page="/Index">Dashboard</a>
-            </li> *@
+            </li>
             <li class="nav-item">
-                <a class="nav-link-side fs-3 text" asp-area="" asp-page="/Privacy"><i class="fa-solid fa-home"></i> Privacidade</a>
+                <a class="nav-link-side fs-3 text" asp-area="" asp-page="/Privacy">Privacidade</a>
             </li>
         </ul>
-    </nav>
+    </nav> *@
 
     <!-- Conteúdo principal -->
-    <div id="main-content">
+@*     <div id="main-content">
         <div class="container">
             @RenderBody()
         </div>
@@ -140,10 +140,9 @@
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
-</html>
+</html> *@
 
-@* @Daqui pra baixo *@
-@* <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -240,14 +239,16 @@
         <div class="d-flex" id="wrapper">
             <!-- Sidebar-->
             <div class="border-end bg-white" id="sidebar-wrapper">
-                <div class="sidebar-heading border-bottom bg-light">Start Bootstrap</div>
+                <div class="sidebar-heading border-bottom bg-light">HipicaFácil</div>
                 <div class="list-group list-group-flush">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Dashboard</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Shortcuts</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Overview</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3"asp-area="" asp-page="/Index">Home</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-area="" asp-page="/Clientes">Clientes</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-area="" asp-page="/Cavalos">Cavalos</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-area=""  asp-page="/Estoque">Estoque</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-area="" asp-page="/Receitas">Receitas</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-area="" asp-page="/Agenda">Agenda</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-area="" asp-page="/Dashboard">Dashboard</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-area="" asp-page="/Privacidade">Privacidade</a>
                 </div>
             </div>
             <!-- Page content wrapper-->
@@ -271,7 +272,7 @@
                                     </div>
                                 </li>
                             </ul>
-@*                         </div>
+                        </div>
                     </div>
                 </nav>
                 <div>
@@ -282,28 +283,15 @@
                         </div>
                     </div>
                 </div>
-                <!-- Page content-->
-                @*                 <div class="container-fluid">
-                <h1 class="mt-4">Simple Sidebar</h1>
-                <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
-                <p>
-                Make sure to keep all page content within the
-                <code>#page-content-wrapper</code>
-                . The top navbar is optional, and just for demonstration. Just create an element with the
-                <code>#sidebarToggle</code>
-                ID which will toggle the menu when clicked.
-                </p>
-                </div> *@
-@*             </div>
+            </div>
         </div>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
     </body>
-</html> *@
+</html>
 
-@* 
 <footer class="border-top footer text-muted footer-custom">
     <div class="container-fluid">
         &copy; 2024 - HipicaFacil - <a asp-area="" asp-page="/Privacy">Privacy</a>
@@ -316,5 +304,5 @@
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
-</html> *@ 
+</html> 
 

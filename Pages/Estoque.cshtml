@@ -108,51 +108,15 @@
                 <tr>
                     <th>
                         Nome
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonNome" data-bs-toggle="dropdown" aria-expanded="false">
-                                Ordenar
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButtonNome">
-                                <li><a class="dropdown-item" href="#" onclick="sortTable('Nome', 'asc')">A-Z</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="sortTable('Nome', 'desc')">Z-A</a></li>
-                            </ul>
-                        </div>
                     </th>
                     <th>
                         Fabricante
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonFabricante" data-bs-toggle="dropdown" aria-expanded="false">
-                                Ordenar
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButtonFabricante">
-                                <li><a class="dropdown-item" href="#" onclick="sortTable('Fabricante', 'asc')">A-Z</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="sortTable('Fabricante', 'desc')">Z-A</a></li>
-                            </ul>
-                        </div>
                     </th>
                     <th>
                         Quantidade
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonQuantidade" data-bs-toggle="dropdown" aria-expanded="false">
-                                Ordenar
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButtonQuantidade">
-                                <li><a class="dropdown-item" href="#" onclick="sortTable('Quantidade', 'asc')">Crescente</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="sortTable('Quantidade', 'desc')">Decrescente</a></li>
-                            </ul>
-                        </div>
                     </th>
                     <th>
                         Validade
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonValidade" data-bs-toggle="dropdown" aria-expanded="false">
-                                Ordenar
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButtonValidade">
-                                <li><a class="dropdown-item" href="#" onclick="sortTable('Validade', 'asc')">Crescente</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="sortTable('Validade', 'desc')">Decrescente</a></li>
-                            </ul>
-                        </div>
                     </th>
                     <th>Ação</th>
                 </tr>
@@ -239,43 +203,6 @@
 
             // Exibir o formulário de edição
             document.getElementById("editForm").style.display = "block";
-        }
-
-        function sortTable(columnName, order) {
-            const table = document.querySelector('table');
-            const tbody = table.querySelector('tbody');
-            const rows = [...tbody.rows];
-
-            rows.sort((a, b) => {
-                const cellA = a.querySelector(`td:nth-child(${getColumnIndex(columnName)})`).textContent.trim();
-                const cellB = b.querySelector(`td:nth-child(${getColumnIndex(columnName)})`).textContent.trim();
-
-                if (!isNaN(cellA) && !isNaN(cellB)) {
-                    return order === 'asc' ? cellA - cellB : cellB - cellA;
-                } else {
-                    return order === 'asc' ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
-                }
-            });
-
-            while (tbody.firstChild) {
-                tbody.removeChild(tbody.firstChild);
-            }
-
-            rows.forEach(row => tbody.appendChild(row));
-        }
-
-        function getColumnIndex(columnName) {
-            const headers = document.querySelectorAll('th');
-            let index = 0;
-
-            for (const th of headers) {
-                index++;
-                if (th.textContent.trim() === columnName) {
-                    break;
-                }
-            }
-
-            return index;
         }
 
     </script>

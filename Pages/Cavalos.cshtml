@@ -54,9 +54,9 @@
             min-width: 0;
         }
 
-            .dropdown-menu a {
-                font-size: 12px;
-            }
+        .dropdown-menu a {
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
@@ -74,17 +74,33 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-floating">
-                        <input type="text" id="raca" asp-for="Cavalo.Raca" class="form-control" placeholder=" " />
+                        <select id="raca" asp-for="Cavalo.Raca" class="form-select" required>
+                            <option value="">Selecione a Raça</option>
+                            <option value="Brasileiro de Hipismo">Brasileiro de Hipismo</option>
+                            <option value="Campeiro">Campeiro</option>
+                            <option value="Campolina">Campolina</option>
+                            <option value="Lavradeiro">Lavradeiro</option>
+                            <option value="Mangalarga">Mangalarga</option>
+                            <option value="Mangalarga Marchador">Mangalarga Marchador</option>
+                            <option value="Marajoara">Marajoara</option>
+                            <option value="Nordestino">Nordestino</option>
+                            <option value="Pampa">Pampa</option>
+                            <option value="Pantaneiro">Pantaneiro</option>
+                            <option value="Pônei Brasileiro">Pônei Brasileiro</option>
+                            <option value="Piquira">Piquira</option>
+                            <option value="Puruca">Puruca</option>
+                            <option value="SRD">SRD</option>
+                        </select>
                         <label for="raca">Raça:</label>
                     </div>
                 </div>
             </div>
             <br />
             <div class="row">
-                <div class=col-sm-4>
+                <div class="col-sm-4">
                     <div class="form-floating">
-                        <input type="number" id="idade" asp-for="Cavalo.Idade" class="form-control" placeholder=" " />
-                        <label for="idade">Idade:</label>
+                        <input type="date" id="idade" asp-for="Cavalo.Idade" class="form-control" placeholder=" " />
+                        <label for="idade">Data de Nascimento:</label>
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -107,52 +123,16 @@
             <thead>
                 <tr>
                     <th>
-                        Nome
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonNome" data-bs-toggle="dropdown" aria-expanded="false">
-                                Ordenar
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButtonNome">
-                                <li><a class="dropdown-item" href="#" onclick="sortTable('Nome', 'asc')">A-Z</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="sortTable('Nome', 'desc')">Z-A</a></li>
-                            </ul>
-                        </div>
+                        Nome                      
                     </th>
                     <th>
-                        Raça
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonRaca" data-bs-toggle="dropdown" aria-expanded="false">
-                                Ordenar
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButtonRaca">
-                                <li><a class="dropdown-item" href="#" onclick="sortTable('Raca', 'asc')">A-Z</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="sortTable('Raca', 'desc')">Z-A</a></li>
-                            </ul>
-                        </div>
+                        Raça                      
                     </th>
                     <th>
-                        Idade
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonIdade" data-bs-toggle="dropdown" aria-expanded="false">
-                                Ordenar
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButtonIdade">
-                                <li><a class="dropdown-item" href="#" onclick="sortTable('Idade', 'asc')">Crescente</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="sortTable('Idade', 'desc')">Decrescente</a></li>
-                            </ul>
-                        </div>
+                        Data de Nascimento                        
                     </th>
                     <th>
-                        Peso
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonPeso" data-bs-toggle="dropdown" aria-expanded="false">
-                                Ordenar
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButtonPeso">
-                                <li><a class="dropdown-item" href="#" onclick="sortTable('Peso', 'asc')">Crescente</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="sortTable('Peso', 'desc')">Decrescente</a></li>
-                            </ul>
-                        </div>
+                        Peso                    
                     </th>
                     <th>Ação</th>
                 </tr>
@@ -166,7 +146,7 @@
                         <td>@cavalo.Idade</td>
                         <td>@cavalo.Peso</td>
                         <td>
-                            <button type="button" class="acao-btn" onclick="mostrarFormEditar('@cavalo.Nome', '@cavalo.Raca', @cavalo.Idade, @cavalo.Peso, @cavalo.Id)">Editar</button>
+                            <button type="button" class="acao-btn" onclick="mostrarFormEditar('@cavalo.Nome', '@cavalo.Raca', '@cavalo.Idade', @cavalo.Peso, @cavalo.Id)">Editar</button>
                             <!-- Botão de Remover -->
                             <form method="post" style="display: inline;">
                                 <input type="hidden" name="IdCavalo" value="@cavalo.Id" />
@@ -201,83 +181,61 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-floating">
-                            <input type="text" id="racaEdit" name="CavaloEdit.Raca" class="form-control" placeholder=" " />
+                            <select id="racaEdit" name="CavaloEdit.Raca" class="form-select">
+                                <option value="">Selecione a Raça</option>
+                                <option value="Brasileiro de Hipismo">Brasileiro de Hipismo</option>
+                                <option value="Campeiro">Campeiro</option>
+                                <option value="Campolina">Campolina</option>
+                                <option value="Lavradeiro">Lavradeiro</option>
+                                <option value="Mangalarga">Mangalarga</option>
+                                <option value="Mangalarga Marchador">Mangalarga Marchador</option>
+                                <option value="Marajoara">Marajoara</option>
+                                <option value="Nordestino">Nordestino</option>
+                                <option value="Pampa">Pampa</option>
+                                <option value="Pantaneiro">Pantaneiro</option>
+                                <option value="Pônei Brasileiro">Pônei Brasileiro</option>
+                                <option value="Piquira">Piquira</option>
+                                <option value="Puruca">Puruca</option>
+                                <option value="SRD">SRD</option>
+                            </select>
                             <label for="racaEdit">Raça:</label>
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-6">
                         <div class="form-floating">
-                            <input type="number" id="idadeEdit" name="CavaloEdit.Idade" class="form-control" placeholder=" " />
-                            <label for="idadeEdit">Idade:</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="form-floating">
-                            <input type="number" id="pesoEdit" name="CavaloEdit.Peso" class="form-control" placeholder=" " />
-                            <label for="pesoEdit">Peso:</label>
+                            <input type="date" id="idadeEdit" name="CavaloEdit.Idade" class="form-control" placeholder=" " />
+                            <label for="idadeEdit">Data de Nascimento:</label>
                         </div>
                     </div>
                 </div>
                 <br />
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <div class="form-floating">
+                            <input type="number" id="pesoEdit" name="CavaloEdit.Peso" class="form-control" placeholder=" " />
+                            <label for="pesoEdit">Peso:</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
                         <button type="submit" class="btn btn-primary btn-lg">Salvar</button>
                     </div>
                 </div>
             </div>
         </form>
     </div>
-
-    <!-- Script JavaScript para mostrar o formulário de edição e ordenação da tabela -->
-    <script>
-        function mostrarFormEditar(nome, raca, idade, peso, id) {
-            document.getElementById("nomeEdit").value = nome;
-            document.getElementById("racaEdit").value = raca;
-            document.getElementById("idadeEdit").value = idade;
-            document.getElementById("pesoEdit").value = peso;
-            document.getElementById("id").value = id;
-
-            // Exibir o formulário de edição
-            document.getElementById("editForm").style.display = "block";
-        }
-
-        function sortTable(columnName, order) {
-            const table = document.querySelector('table');
-            const tbody = table.querySelector('tbody');
-            const rows = [...tbody.rows];
-
-            rows.sort((a, b) => {
-                const cellA = a.querySelector(`td:nth-child(${getColumnIndex(columnName)})`).textContent.trim();
-                const cellB = b.querySelector(`td:nth-child(${getColumnIndex(columnName)})`).textContent.trim();
-
-                if (!isNaN(cellA) && !isNaN(cellB)) {
-                    return order === 'asc' ? cellA - cellB : cellB - cellA;
-                } else {
-                    return order === 'asc' ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
-                }
-            });
-
-            while (tbody.firstChild) {
-                tbody.removeChild(tbody.firstChild);
-            }
-
-            rows.forEach(row => tbody.appendChild(row));
-        }
-
-        function getColumnIndex(columnName) {
-            const headers = document.querySelectorAll('th');
-            let index = 0;
-
-            for (const th of headers) {
-                index++;
-                if (th.textContent.trim() === columnName) {
-                    break;
-                }
-            }
-
-            return index;
-        }
-
-    </script>
 </body>
 </html>
+
+<!-- Script JavaScript para mostrar o formulário de edição e ordenação da tabela -->
+<script>
+    function mostrarFormEditar(nome, raca, idade, peso, id) {
+        document.getElementById("nomeEdit").value = nome;
+        document.getElementById("racaEdit").value = raca;
+        document.getElementById("idadeEdit").value = idade;
+        document.getElementById("pesoEdit").value = peso;
+        document.getElementById("id").value = id;
+
+        // Exibir o formulário de edição
+        document.getElementById("editForm").style.display = "block";
+    }
+</script>

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -74,8 +75,8 @@ public class CavalosModel : PageModel
                             Id = reader.GetInt32(0),
                             Nome = reader.GetString(1),
                             Raca = reader.GetString(2),
-                            Idade = reader.GetInt32(3),
-                            Peso = reader.GetInt32(4)
+                            Idade = reader.IsDBNull(3) ? null : reader.GetDateTime(3),
+                            Peso = reader.GetFloat(4)
                         });
                     }
                 }
@@ -121,7 +122,7 @@ public class CavalosModel : PageModel
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
             connection.Open();
-            string sql = "UPDATE Tb_cavalos SET nome_cavalo = @nome, raca_cavalo = @raca, idade_cavalo = @idade, peso_cavalo = @peso WHERE id_cavalo = @id";
+            string sql = "UPDATE Tb_cavalos SET nome_cavalo = @nome, raca_cavalo =  @raca, idade_cavalo = @idade, peso_cavalo = @peso WHERE id_cavalo = @id";
 
             using (MySqlCommand command = new MySqlCommand(sql, connection))
             {
@@ -141,6 +142,7 @@ public class Cavalo
     public int Id { get; set; }
     public string Nome { get; set; }
     public string Raca { get; set; }
-    public int Idade { get; set; }
-    public int Peso { get; set; }
+    public DateTime? Idade { get; set; }
+    public float Peso { get; set; }
 }
+
